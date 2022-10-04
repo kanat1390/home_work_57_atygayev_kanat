@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+Детальная страница
+{% endblock page_title %}
+
+{% block content %}
+<h1>Все задачи</h1>
+<p>{{ task.summary }}</p>
+{{ task.description }}
+{% endblock content %}
