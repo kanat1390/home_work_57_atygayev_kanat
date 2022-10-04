@@ -4,12 +4,16 @@
 Главная страница
 {% endblock page_title %}
 
+{% block menu %}
+<a href="{% url 'task-create' %}">Добавить задачу</a>
+{% endblock menu %}
+
 {% block content %}
 <h1>Все задачи</h1>
 <ul>
     {% for task in task_list %}
 
-    <li>{{ task.summary }}</li>
+    <li><a href="{{ task.get_absolute_url }}">{{ task.summary }}</a></li>
 
     {% endfor %}
 </ul>

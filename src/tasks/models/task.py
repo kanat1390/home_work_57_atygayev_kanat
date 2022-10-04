@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import reverse
 
 class Task(models.Model):
     summary = models.CharField(verbose_name='Заголовок', max_length=200)
@@ -11,3 +11,6 @@ class Task(models.Model):
 
     def __str__(self):
         return self.summary
+    
+    def get_absolute_url(self):
+        return reverse('task-detail', kwargs={'pk':self.id})

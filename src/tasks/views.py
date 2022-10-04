@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.base import View
-from django.http import HttpResponse
-from tasks.services import get_task_list, get_task_by_pk
 
+from tasks.services import get_task_list, get_task_by_pk
+from tasks.forms import TaskForm
+from django.http import Http404
 
 class TaskListView(View):
     def get(self, request, *args, **kwargs):
@@ -20,5 +21,20 @@ class TaskDetailView(View):
         }
         return render(request, 'tasks/task_detail.html', context)
 
+class TaskCreateView(View):
+    def get(self, request, *args, **kwargs):
+        form = TaskForm()
+        context = {
+            'form': form,
+        }
+        return render(request, 'tasks/task_create.html', context)
+    
+    def post(self, request, *args, **kwargs):
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('task-list')
+        else:
+            raise Http404
 
 
