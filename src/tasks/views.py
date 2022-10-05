@@ -22,6 +22,7 @@ class TaskDetailView(View):
         return render(request, 'tasks/task_detail.html', context)
 
 class TaskCreateView(View):
+
     def get(self, request, *args, **kwargs):
         form = TaskForm()
         context = {
@@ -31,6 +32,25 @@ class TaskCreateView(View):
     
     def post(self, request, *args, **kwargs):
         form = TaskForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('task-list')
+        else:
+            raise Http404
+
+class TaskUpdateView(View):
+    
+    def get(self, request, *args, **kwargs):
+        task = get_task_by_pk(kwargs['pk'])
+        form = TaskForm(instance=task)
+        context = {
+            'form': form,
+        }
+        return render(request, 'tasks/task_update.html', context)
+    
+    def post(self, request, *args, **kwargs):
+        task = get_task_by_pk(kwargs['pk'])
+        form = TaskForm(request.POST, instance=task)
         if form.is_valid():
             form.save()
             return redirect('task-list')

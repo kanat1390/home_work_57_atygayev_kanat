@@ -13,7 +13,8 @@
 <ul>
     {% for task in task_list %}
 
-    <li><a href="{{ task.get_absolute_url }}">{{ task.summary }}</a></li>
+    <li><a href="{{ task.get_absolute_url }}">{{ task.summary }}</a> <a
+            href="{% url 'task-update' task.pk %}">Редактрировать</a> <a href="">Удалить</a></li>
 
     {% endfor %}
 </ul>
