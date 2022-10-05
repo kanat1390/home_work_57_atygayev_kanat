@@ -13,5 +13,11 @@ class Task(models.Model):
     def __str__(self):
         return self.summary
     
-    def get_absolute_url(self):
+    def get_detail_url(self):
         return reverse('task-detail', kwargs={'pk':self.id})
+    
+    def get_update_url(self):
+        return reverse('task-update', kwargs={'pk':self.id})
+    
+    def get_delete_url(self):
+        return reverse('task-delete', kwargs={'pk':self.id})

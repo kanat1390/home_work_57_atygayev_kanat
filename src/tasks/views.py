@@ -57,4 +57,17 @@ class TaskUpdateView(View):
         else:
             raise Http404
 
+class TaskDeleteView(View):
+    def get(self, request, *args, **kwargs):
+        task = get_task_by_pk(kwargs['pk'])
+        context = {
+            'task':task,
+        }
+        return render(request, 'tasks/task_delete.html', context)
+    def post(self, request, *args, **kwargs):
+        task = get_task_by_pk(kwargs['pk'])
+        task.delete()
+        return redirect('task-list')
+
+
 

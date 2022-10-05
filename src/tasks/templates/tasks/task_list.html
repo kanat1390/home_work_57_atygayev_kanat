@@ -1,21 +1,48 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block page_title %}
-Главная страница
+IssueTracker
 {% endblock page_title %}
-
-{% block menu %}
-<a href="{% url 'task-create' %}">Добавить задачу</a>
-{% endblock menu %}
+{% block navigation %}
+{% include "tasks/includes/navigation.html" %}
+{% endblock navigation %}
+{% block title %}
+<h5 class="text-center">Список задач</h5>
+{% endblock title %}
 
 {% block content %}
-<h1>Все задачи</h1>
-<ul>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Краткое описание</th>
+            <th scope="col">Статус</th>
+            <th scope="col">Время создания</th>
+            <th scope="col">Действия</th>
+        </tr>
+    </thead>
     {% for task in task_list %}
-
-    <li><a href="{{ task.get_absolute_url }}">{{ task.summary }}</a> <a
-            href="{% url 'task-update' task.pk %}">Редактрировать</a> <a href="">Удалить</a></li>
-
+    <tbody>
+        <tr>
+            <td><a class="task-item" href="{{ task.get_detail_url }}">{{ task.summary }}</a></td>
+            <td>
+                <span style="padding:4px;">
+                    {{ task.status }}
+                </span>
+            </td>
+            <td>{{ task.created_at }}</td>
+            <td>
+                <div class="d-flex justify-content-start gap-3">
+                    <a href="{{ task.get_update_url }}">
+                        <img src="{% static 'tasks/icons/edit.svg' %}" alt="edit" width="15px">
+                    </a>
+                    <a href="{{ task.get_delete_url }}" data-toggle="modal" data-target="#exampleModal">
+                        <img src="{% static 'tasks/icons/trash.svg' %}" alt="edit" width="15px">
+                    </a>
+                </div>
+            </td>
+        </tr>
+    </tbody>
     {% endfor %}
-</ul>
+</table>
 {% endblock content %}

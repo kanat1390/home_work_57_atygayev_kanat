@@ -4,6 +4,10 @@
 Добавление задачи
 {% endblock page_title %}
 
+{% block navigation %}
+{% include "tasks/includes/back_btn.html" %}
+{% endblock navigation %}
+
 {% block content %}
 <h1>Добавление задачи</h1>
 <form action="" method="POST">
