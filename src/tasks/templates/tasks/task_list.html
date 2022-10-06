@@ -24,7 +24,7 @@ IssueTracker
     </thead>
     {% for task in task_list %}
     <tbody>
-        {% include "tasks/task_delete.html" %}
+        {% include "tasks/includes/task_delete_confirm.html" %}
         <tr>
             <td><a class="task-item" href="{{ task.get_detail_url }}">{{ task.summary }}</a></td>
             <td>
