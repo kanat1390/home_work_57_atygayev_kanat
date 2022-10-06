@@ -24,6 +24,7 @@ IssueTracker
     </thead>
     {% for task in task_list %}
     <tbody>
+        {% include "tasks/task_delete.html" %}
         <tr>
             <td><a class="task-item" href="{{ task.get_detail_url }}">{{ task.summary }}</a></td>
             <td>
@@ -38,7 +39,7 @@ IssueTracker
                     <a href="{{ task.get_update_url }}">
                         <img src="{% static 'tasks/icons/edit.svg' %}" alt="edit" width="15px">
                     </a>
-                    <a href="{{ task.get_delete_url }}" data-toggle="modal" data-target="#exampleModal">
+                    <a data-bs-toggle="modal" data-bs-target="#deleteModal{{task.pk}}">
                         <img src="{% static 'tasks/icons/trash.svg' %}" alt="edit" width="15px">
                     </a>
                 </div>

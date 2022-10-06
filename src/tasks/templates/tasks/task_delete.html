@@ -1,16 +1,20 @@
-{% extends "base.html" %}
-
-{% block page_title %}
-Удаление задачи
-{% endblock page_title %}
-
-{% block content %}
-<h1>Подтверждение удаления</h1>
-<h3 style="color:red;">Вы действительно хотите удалить "{{ task.summary }}"</h3>
-<form action="" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <a href="{% url 'task-list' %}" class="btn btn-secondary">Нет</a>
-    <button type="submit" class="btn btn-danger">Да</button>
-</form>
-{% endblock content %}
+<!-- Modal -->
+<div class="modal fade" id="deleteModal{{task.pk}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Вы действительно желаете удалить задачу
+                    "{{task.summary}}"?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{% url 'task-delete' task.pk %}" method="POST">
+                {% csrf_token %}
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>
+                    <button type="submit" class="btn btn-danger">Да</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
