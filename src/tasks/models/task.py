@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from .type import Type
+from datetime import datetime
 
 class Task(models.Model):
     summary = models.CharField(verbose_name='Заголовок', max_length=200)
@@ -21,3 +22,15 @@ class Task(models.Model):
     
     def get_delete_url(self):
         return reverse('task-delete', kwargs={'pk':self.id})
+
+    def get_date(self):
+        time = datetime.now()
+        if self.created_at.day == time.day:
+            return str(time.hour - self.created_at.hour) + " часа назад"
+        else:
+            if self.created_at.month == time.month:
+                return str(time.day - self.created_at.day) + " дня назад"
+            else:
+                if self.created_at.year == time.year:
+                    return str(time.month - self.created_at.month) + " месяца назад"
+        return self.created_at

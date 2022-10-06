@@ -17,7 +17,8 @@ IssueTracker
         <tr>
             <th scope="col">Краткое описание</th>
             <th scope="col">Статус</th>
-            <th scope="col">Время создания</th>
+            <th scope="col">Дата создания</th>
+            <th scope="col">Последние изменения</th>
             <th scope="col">Действия</th>
         </tr>
     </thead>
@@ -30,7 +31,8 @@ IssueTracker
                     {{ task.status }}
                 </span>
             </td>
-            <td>{{ task.created_at }}</td>
+            <td>{{ task.created_at}}</td>
+            <td>{{ task.get_date }}</td>
             <td>
                 <div class="d-flex justify-content-start gap-3">
                     <a href="{{ task.get_update_url }}">

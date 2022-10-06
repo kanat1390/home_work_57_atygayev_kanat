@@ -1,25 +1,32 @@
 from django.shortcuts import render, redirect
 from django.views.generic.base import View
+from django.views.generic.base import TemplateView
 
 from tasks.services import get_task_list, get_task_by_pk
 from tasks.forms import TaskForm
 from django.http import Http404
 
-class TaskListView(View):
-    def get(self, request, *args, **kwargs):
-        task_list =get_task_list()
-        context = {
-            'task_list': task_list,
-        }
-        return render(request, 'tasks/task_list.html', context)
 
-class TaskDetailView(View):
-    def get(self, request, *args, **kwargs):
+class TaskListView(TemplateView):
+
+    template_name = 'tasks/task_list.html'
+
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        task_list =get_task_list()
+        context['task_list'] = task_list
+        return context
+
+class TaskDetailView(TemplateView):
+
+    template_name = 'tasks/task_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         task = get_task_by_pk(kwargs.get('pk'))
-        context = {
-            'task': task,
-        }
-        return render(request, 'tasks/task_detail.html', context)
+        context['task'] = task
+        return context
+
 
 class TaskCreateView(View):
 
@@ -64,6 +71,7 @@ class TaskDeleteView(View):
             'task':task,
         }
         return render(request, 'tasks/task_delete.html', context)
+        
     def post(self, request, *args, **kwargs):
         task = get_task_by_pk(kwargs['pk'])
         task.delete()
