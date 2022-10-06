@@ -9,10 +9,5 @@
 {% endblock navigation %}
 
 {% block content %}
-<h1>Добавление задачи</h1>
-<form action="" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Создать</button>
-</form>
+{% include "tasks/includes/task_form.html" with title="Добавление задачи" btn_text="Добавить" %}
 {% endblock content %}

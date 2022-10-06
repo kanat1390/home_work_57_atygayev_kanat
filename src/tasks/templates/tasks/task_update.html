@@ -10,10 +10,5 @@
 {% endblock navigation %}
 
 {% block content %}
-<h1>Редактирование задачи</h1>
-<form action="" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Изменить</button>
-</form>
+{% include "tasks/includes/task_form.html" with title="Изменение задачи" btn_text="Изменить" %}
 {% endblock content %}
