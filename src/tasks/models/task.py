@@ -26,12 +26,14 @@ class Task(models.Model):
 
     def get_date(self):
         time = datetime.now()
-        if self.updated_at.day == time.day:
-            return str(time.hour - self.updated_at.hour) + " часа назад"
+        if self.updated_at.minute < time.minute:
+            return str(time.minute - self.updated_at.minute) + " минут назад"
         else:
+            if self.updated_at.day == time.day:
+                return str(time.hour - self.updated_at.hour) + " часа назад"
             if self.updated_at.month == time.month:
                 return str(time.day - self.updated_at.day) + " дня назад"
             else:
                 if self.updated_at.year == time.year:
                     return str(time.month - self.updated_at.month) + " месяца назад"
-        return self.created_at
+        return self.updated_at
